@@ -114,7 +114,7 @@ void display() {
     drawTree(500, 50);
 
     // Draw the trajectory and the projectile
-    glColor3f(1.0f, 1.0f, 1.0f);
+    glColor3f(1.0f, 0.0f, 0.0f);
     glBegin(GL_LINE_STRIP);
     for (float t = 0; t <= currentTime; t += 0.01f) {
         float x, y;
@@ -126,10 +126,17 @@ void display() {
     // Display the projectile
     float x, y;
     getProjectilePosition(currentTime, x, y);
-    glColor3f(1.0f, 0.0f, 0.0f); // Red color for the projectile
-    glPointSize(8.0);
-    glBegin(GL_POINTS);
-    glVertex2f(x, y);
+    glColor3f(0.0f, 0.0f, 0.0f);
+    // Draw a filled circle
+    glBegin(GL_POLYGON);
+    float radius = 1.2;
+    int numSegments = 50; 
+    for (int i = 0; i < numSegments; i++) {
+       float theta = 2.0f * 3.1415926f * float(i) / float(numSegments);
+       float cx = radius * cosf(theta);
+       float cy = radius * sinf(theta);
+       glVertex2f(x + cx, y + cy);
+    }
     glEnd();
 
     // Draw text on the screen
